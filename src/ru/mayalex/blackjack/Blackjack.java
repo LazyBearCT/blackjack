@@ -10,16 +10,8 @@ public class Blackjack {
 
     public static void main(String[] args) {
         System.out.println("\t\tWelcome to Blackjack!\n");
-        int countBots = 0;
-        while (countBots < 1 || countBots > 3) {
-            System.out.print("How many bots? (1 - 3): ");
-            countBots = InputChecker.nextInt();
-        }
-        int countPlayers = 0;
-        while (countPlayers < 1 || countPlayers > 3) {
-            System.out.print("How many hunan players? (1 - 3): ");
-            countPlayers = InputChecker.nextInt();
-        }
+        int countBots = InputChecker.getCount("bots");
+        int countPlayers = InputChecker.getCount("human players");
         System.out.println("Please, enter player names.");
         List<String> names = new ArrayList<>();
         for (int i = 0; i < countPlayers; i++) {
