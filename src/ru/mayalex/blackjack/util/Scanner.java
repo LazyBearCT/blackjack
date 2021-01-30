@@ -15,7 +15,7 @@ public class Scanner implements AutoCloseable {
         br = new BufferedReader(new InputStreamReader(is));
     }
 
-    private String nextToken() throws IOException {
+    public String nextToken() throws IOException {
         while (st == null || !st.hasMoreTokens()) {
             String s = br.readLine();
             if (s == null) {
