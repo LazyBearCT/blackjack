@@ -1,1 +1,0 @@
-java -jar out/artifacts/blackjack_jar/blackjack.jar
