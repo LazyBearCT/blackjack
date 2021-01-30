@@ -14,8 +14,10 @@ public class Game {
     private Deck deck;
     private Dealer dealer;
     private List<AbstractPlayer> players;
+    private int countBots;
 
     public Game(int countBots, List<String> names) {
+        this.countBots = countBots;
         players = new ArrayList<>();
         for (int i = 1; i <= countBots; i++) {
             players.add(new Bot(i));
@@ -40,11 +42,18 @@ public class Game {
             System.out.println(player);
         }
         System.out.println(dealer);
+        int count = 0;
         for (AbstractPlayer player : players) {
+            if (count == countBots) {
+                System.out.println();
+                System.out.print(dealer);
+            }
             deck.additionalCards(player);
+            count++;
         }
         dealer.flipFirstCard();
         deck.additionalCards(dealer);
+        System.out.println();
         if (dealer.isBusted()) {
             for (AbstractPlayer player : players) {
                 if (!player.isBusted()) {
