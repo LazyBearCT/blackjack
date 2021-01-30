@@ -6,11 +6,34 @@ import ru.mayalex.blackjack.deck.Hand;
 
 public abstract class AbstractPlayer {
 
+    protected static final int MIN_BET = 1;
+    protected static final int MAX_BET = 20;
+
     protected String name;
     protected Hand hand = new Hand();
+    protected int balance;
+    protected int bet;
+    private boolean isActive = true;
 
     protected AbstractPlayer(String name) {
+        this(name, 200);
+    }
+
+    protected AbstractPlayer(String name, int balance) {
         this.name = name;
+        this.balance = balance;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public boolean isActivePlayer() {
+        return isActive;
+    }
+
+    public void deactivatePlayer() {
+        isActive = false;
     }
 
     public boolean isBusted() {
@@ -23,6 +46,16 @@ public abstract class AbstractPlayer {
 
     public void win() {
         System.out.println(name + " wins.");
+        if (isBlackjack()) {
+            balance += 3 * bet;
+        } else {
+            balance += 2 * bet;
+        }
+    }
+
+    public void bankrupt() {
+        System.out.println(name + " is bankrupt");
+        balance = 0;
     }
 
     public void lose() {
@@ -31,6 +64,7 @@ public abstract class AbstractPlayer {
 
     public void draw() {
         System.out.println(name + " draw");
+        balance += bet;
     }
 
     public boolean isBlackjack() {
@@ -53,13 +87,20 @@ public abstract class AbstractPlayer {
     public String toString() {
         StringBuilder string = new StringBuilder();
         string.append(name + ":\t");
-        string.append(hand);
-        int total = getTotal();
-        if (total != 0) {
-            string.append("(" + total + ")");
+        if (isActivePlayer()) {
+            string.append(hand);
+            int total = getTotal();
+            if (total != 0) {
+                string.append("(" + total + ")\t");
+            }
+            string.append(balance + "$");
+        } else {
+            string.append("bankrupt");
         }
         return string.toString();
     }
 
     public abstract boolean isHitting();
+
+    public abstract void makeBet();
 }

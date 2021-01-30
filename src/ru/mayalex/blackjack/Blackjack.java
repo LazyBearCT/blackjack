@@ -12,8 +12,8 @@ public class Blackjack {
 
     public static void main(String[] args) {
         System.out.println("\t\tWelcome to Blackjack!\n");
-        int countBots = InputChecker.getCount("bots");
-        int countPlayers = InputChecker.getCount("human players");
+        int countBots = InputChecker.getCount(3, "How many bots? (1 - 3): ");
+        int countPlayers = InputChecker.getCount(3, "How many human players? (1 - 3): ");
         System.out.println("Please, enter player names.");
         List<String> names = new ArrayList<>();
         for (int i = 0; i < countPlayers; i++) {

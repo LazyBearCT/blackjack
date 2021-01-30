@@ -6,10 +6,10 @@ public class InputChecker {
 
     private static final Scanner in = new Scanner(System.in);
 
-    public static int getCount(String text) {
+    public static int getCount(int max, String text) {
         int count = 0;
-        while (count < 1 || count > 3) {
-            System.out.print("How many " + text + "? (1 - 3): ");
+        while (count < 1 || count > max) {
+            System.out.print(text);
             count = nextInt();
         }
         return count;

@@ -11,9 +11,15 @@ public class Player extends AbstractPlayer {
 
     @Override
     public boolean isHitting() {
-        if (hand.getTotal() == Blackjack.WIN_TOTAL) {
+        if (getTotal() == Blackjack.WIN_TOTAL) {
             return false;
         }
         return InputChecker.askPlayer(name + ", do want a hit? (y/n): ");
+    }
+
+    @Override
+    public void makeBet() {
+        bet = InputChecker.getCount(Math.min(MAX_BET, balance), "Your bet is (1 - " + Math.min(MAX_BET, balance) + "): ");
+        balance -= bet;
     }
 }

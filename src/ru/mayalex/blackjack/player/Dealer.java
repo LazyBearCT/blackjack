@@ -11,6 +11,11 @@ public class Dealer extends AbstractPlayer {
         return getTotal() <= 16;
     }
 
+    @Override
+    public void makeBet() {
+        bet = 0;
+    }
+
     public void flipFirstCard() {
         if (hand.isEmpty()) {
             System.out.println("No card to flip!");

@@ -15,6 +15,7 @@ public class Game {
     private Dealer dealer;
     private List<AbstractPlayer> players;
     private int countBots;
+    private int countActivePlayers;
 
     public Game(int countBots, List<String> names) {
         this.countBots = countBots;
@@ -26,14 +27,20 @@ public class Game {
             players.add(new Player(name));
         }
         dealer = new Dealer();
+        countActivePlayers = countBots + names.size();
     }
 
     public void play() {
         deck = new Deck();
         deck.shuffle();
+        for (AbstractPlayer player : players) {
+            player.makeBet();
+        }
         for (int i = 0; i < 2; i++) {
             for (AbstractPlayer player : players) {
-                deck.deal(player);
+                if (player.isActivePlayer()) {
+                    deck.deal(player);
+                }
             }
             deck.deal(dealer);
         }
@@ -48,7 +55,9 @@ public class Game {
                 System.out.println();
                 System.out.print(dealer);
             }
-            deck.additionalCards(player);
+            if (player.isActivePlayer()) {
+                deck.additionalCards(player);
+            }
             count++;
         }
         dealer.flipFirstCard();
@@ -56,32 +65,50 @@ public class Game {
         System.out.println();
         if (dealer.isBusted()) {
             for (AbstractPlayer player : players) {
-                if (!player.isBusted()) {
-                    player.win();
+                if (player.isActivePlayer()) {
+                    if (!player.isBusted()) {
+                        player.win();
+                    } else {
+                        player.bust();
+                    }
                 } else {
-                    player.bust();
+                    player.bankrupt();
                 }
             }
         } else {
             int dealerTotal = dealer.getTotal();
             for (AbstractPlayer player : players) {
-                if (!player.isBusted()) {
-                    int playerTotal = player.getTotal();
-                    if (playerTotal > dealerTotal) {
-                        player.win();
-                    } else if (playerTotal < dealerTotal) {
-                        player.lose();
+                if (player.isActivePlayer()) {
+                    if (!player.isBusted()) {
+                        int playerTotal = player.getTotal();
+                        if (playerTotal > dealerTotal) {
+                            player.win();
+                        } else if (playerTotal < dealerTotal) {
+                            player.lose();
+                        } else {
+                            player.draw();
+                        }
                     } else {
-                        player.draw();
+                        player.bust();
                     }
                 } else {
-                    player.bust();
+                    player.bankrupt();
                 }
             }
         }
+        System.out.println("\nPlayers: ");
+        System.out.println(dealer);
         for (AbstractPlayer player : players) {
+            System.out.println(player);
+            if (player.getBalance() <= 0) {
+                countActivePlayers--;
+                player.deactivatePlayer();
+            }
             player.clear();
         }
         dealer.clear();
+        if (countActivePlayers == 1) {
+            System.out.println("Game over!!!");
+        }
     }
 }
