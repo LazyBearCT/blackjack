@@ -9,21 +9,21 @@ import java.util.StringTokenizer;
 public class Scanner implements AutoCloseable {
 
     private BufferedReader br;
-    private StringTokenizer stok;
+    private StringTokenizer st;
 
     public Scanner (InputStream is) {
         br = new BufferedReader(new InputStreamReader(is));
     }
 
     private String nextToken() throws IOException {
-        while (stok == null || !stok.hasMoreTokens()) {
+        while (st == null || !st.hasMoreTokens()) {
             String s = br.readLine();
             if (s == null) {
                 return null;
             }
-            stok = new StringTokenizer(s);
+            st = new StringTokenizer(s);
         }
-        return stok.nextToken();
+        return st.nextToken();
     }
 
     public int nextInt() throws IOException {
@@ -47,12 +47,8 @@ public class Scanner implements AutoCloseable {
     }
 
     @Override
-    public void close() {
-        try {
-            br.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void close() throws IOException {
+        br.close();
     }
 }
 

@@ -1,6 +1,6 @@
 package ru.mayalex.blackjack;
 
-public class Main {
+public class Blackjack {
 
     public static void main(String[] args) {
 

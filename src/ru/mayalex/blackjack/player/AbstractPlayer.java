@@ -2,6 +2,8 @@ package ru.mayalex.blackjack.player;
 
 import ru.mayalex.blackjack.deck.Hand;
 
+import java.io.IOException;
+
 public abstract class AbstractPlayer {
 
     protected String name;
