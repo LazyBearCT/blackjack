@@ -28,7 +28,7 @@ public abstract class AbstractPlayer extends Hand {
     }
 
     public void draw() {
-        System.out.println(name + "draw");
+        System.out.println(name + " draw");
     }
 
     @Override

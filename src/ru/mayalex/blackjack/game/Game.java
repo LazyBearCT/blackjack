@@ -20,11 +20,11 @@ public class Game {
             players.add(new Player(name));
         }
         dealer = new Dealer();
-        deck = new Deck();
-        deck.shuffle();
     }
 
     public void play() {
+        deck = new Deck();
+        deck.shuffle();
         for (int i = 0; i < 2; i++) {
             for (AbstractPlayer player : players) {
                 deck.deal(player);
@@ -40,12 +40,13 @@ public class Game {
             deck.additionalCards(player);
         }
         dealer.flipFirstCard();
-        System.out.println();
         deck.additionalCards(dealer);
         if (dealer.isBusted()) {
             for (AbstractPlayer player : players) {
                 if (!player.isBusted()) {
                     player.win();
+                } else {
+                    player.bust();
                 }
             }
         } else {
@@ -60,6 +61,8 @@ public class Game {
                     } else {
                         player.draw();
                     }
+                } else {
+                    player.bust();
                 }
             }
         }

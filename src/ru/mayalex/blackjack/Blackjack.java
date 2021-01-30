@@ -12,9 +12,10 @@ public class Blackjack {
         System.out.println("\t\tWelcome to Blackjack!\n");
         int countPlayers = 0;
         while (countPlayers < 1 || countPlayers > 7) {
-            System.out.print("How many players? (y/n): ");
+            System.out.print("How many players? (1 - 7): ");
             countPlayers = InputChecker.nextInt();
         }
+        System.out.println("Please, enter player names.");
         List<String> names = new ArrayList<>();
         for (int i = 0; i < countPlayers; i++) {
             names.add(InputChecker.next());
@@ -22,6 +23,7 @@ public class Blackjack {
         Game game = new Game(names);
         do {
             game.play();
-        } while (InputChecker.askPlayer("\nDo you want to play again? (y/n): "));
+            System.out.println();
+        } while (InputChecker.askPlayer("Do you want to play again? (y/n): "));
     }
 }

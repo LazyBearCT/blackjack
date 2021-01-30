@@ -37,12 +37,15 @@ public class InputChecker {
         try {
             while (true) {
                 System.out.print(text);
-                char response = (char) System.in.read();
-                if (response == 'y' || response == 'Y') {
-                    return true;
-                }
-                if (response == 'n' || response == 'N') {
-                    return false;
+                String string = in.nextToken();
+                if (string.length() == 1) {
+                    char response = Character.toLowerCase(string.charAt(0));
+                    if (response == 'y') {
+                        return true;
+                    }
+                    if (response == 'n') {
+                        return false;
+                    }
                 }
                 System.out.println("Please, try again");
             }
