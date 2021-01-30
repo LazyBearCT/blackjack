@@ -51,4 +51,3 @@ public class Scanner implements AutoCloseable {
         br.close();
     }
 }
-

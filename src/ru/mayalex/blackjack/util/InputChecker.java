@@ -1,7 +1,6 @@
 package ru.mayalex.blackjack.util;
 
 import java.io.IOException;
-import java.util.function.IntPredicate;
 
 public class InputChecker {
 
