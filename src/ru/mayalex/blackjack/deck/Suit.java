@@ -1,0 +1,19 @@
+package ru.mayalex.blackjack.deck;
+
+public enum Suit {
+    CLUBS("c"),
+    DIAMONDS("d"),
+    HEARTS("h"),
+    SPADES("s");
+
+    private String name;
+
+    Suit(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+}
