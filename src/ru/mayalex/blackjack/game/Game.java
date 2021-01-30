@@ -2,6 +2,7 @@ package ru.mayalex.blackjack.game;
 
 import ru.mayalex.blackjack.deck.Deck;
 import ru.mayalex.blackjack.player.AbstractPlayer;
+import ru.mayalex.blackjack.player.Bot;
 import ru.mayalex.blackjack.player.Dealer;
 import ru.mayalex.blackjack.player.Player;
 
@@ -14,8 +15,11 @@ public class Game {
     private Dealer dealer;
     private List<AbstractPlayer> players;
 
-    public Game(List<String> names) {
+    public Game(int countBots, List<String> names) {
         players = new ArrayList<>();
+        for (int i = 1; i <= countBots; i++) {
+            players.add(new Bot(i));
+        }
         for (String name : names) {
             players.add(new Player(name));
         }
