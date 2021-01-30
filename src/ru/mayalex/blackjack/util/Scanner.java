@@ -7,14 +7,15 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Scanner implements AutoCloseable {
-    BufferedReader br;
-    StringTokenizer stok;
+
+    private BufferedReader br;
+    private StringTokenizer stok;
 
     public Scanner (InputStream is) {
         br = new BufferedReader(new InputStreamReader(is));
     }
 
-    String nextToken() throws IOException {
+    private String nextToken() throws IOException {
         while (stok == null || !stok.hasMoreTokens()) {
             String s = br.readLine();
             if (s == null) {
@@ -25,23 +26,23 @@ public class Scanner implements AutoCloseable {
         return stok.nextToken();
     }
 
-    int nextInt() throws IOException {
+    public int nextInt() throws IOException {
         return Integer.parseInt(nextToken());
     }
 
-    long nextLong() throws IOException {
+    public long nextLong() throws IOException {
         return Long.parseLong(nextToken());
     }
 
-    double nextDouble() throws IOException {
+    public double nextDouble() throws IOException {
         return Double.parseDouble(nextToken());
     }
 
-    char nextChar() throws IOException {
+    public char nextChar() throws IOException {
         return (char) (br.read());
     }
 
-    String nextLine() throws IOException {
+    public String nextLine() throws IOException {
         return br.readLine();
     }
 
