@@ -1,5 +1,6 @@
 package ru.mayalex.blackjack.player;
 
+import ru.mayalex.blackjack.deck.Card;
 import ru.mayalex.blackjack.deck.Hand;
 
 public abstract class AbstractPlayer extends Hand {
@@ -27,7 +28,24 @@ public abstract class AbstractPlayer extends Hand {
     }
 
     public void draw() {
-        System.out.println("draw");
+        System.out.println(name + "draw");
+    }
+
+    @Override
+    public String toString() {
+        System.out.print(name + ":\t");
+        if (cards.isEmpty()) {
+            return "<empty>";
+        }
+        StringBuilder string = new StringBuilder();
+        for (Card card : cards) {
+            string.append(card + "\t");
+        }
+        int total = getTotal();
+        if (total != 0) {
+            string.append("(" + total + ")");
+        }
+        return string.toString();
     }
 
     public abstract boolean isHitting();

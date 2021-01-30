@@ -41,7 +41,6 @@ public class Game {
         }
         dealer.flipFirstCard();
         System.out.println();
-        System.out.print(dealer);
         deck.additionalCards(dealer);
         if (dealer.isBusted()) {
             for (AbstractPlayer player : players) {

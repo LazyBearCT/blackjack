@@ -34,4 +34,12 @@ public class Card {
     public void flip() {
         isFaceUp = !isFaceUp;
     }
+
+    @Override
+    public String toString() {
+        if (isFaceUp) {
+            return rank.toString() + suit.toString();
+        }
+        return "XX";
+    }
 }

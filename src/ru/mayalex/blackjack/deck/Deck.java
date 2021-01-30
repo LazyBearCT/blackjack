@@ -33,6 +33,7 @@ public class Deck extends Hand {
 
     public void additionalCards(AbstractPlayer player) {
         System.out.println();
+        System.out.println(player);
         while (!(player.isBusted()) && player.isHitting()) {
             deal(player);
             System.out.println(player);
