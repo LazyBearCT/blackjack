@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Hand {
 
-    private List<Card> cards = new ArrayList<>();
+    protected List<Card> cards = new ArrayList<>();
 
     public void clear() {
         cards.clear();
@@ -13,17 +13,6 @@ public class Hand {
 
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public boolean isEmpty() {
-        return cards.isEmpty();
-    }
-
-    public Card getCard(int index) {
-        if (cards.size() < index) {
-            throw new RuntimeException();
-        }
-        return cards.get(index - 1);
     }
 
     public int getTotal() {

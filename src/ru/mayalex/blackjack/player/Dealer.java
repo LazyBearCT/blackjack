@@ -8,14 +8,14 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public boolean isHitting() {
-        return hand.getTotal() <= 16;
+        return getTotal() <= 16;
     }
 
     public void flipFirstCard() {
-        if (hand.isEmpty()) {
+        if (cards.isEmpty()) {
             System.out.println("No card to flip!");
         } else {
-            hand.getCard(1).flip();
+            cards.get(0).flip();
         }
     }
 }
