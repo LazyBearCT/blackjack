@@ -15,6 +15,17 @@ public class Hand {
         cards.add(card);
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
+    public Card getCard(int index) {
+        if (cards.size() < index) {
+            throw new RuntimeException();
+        }
+        return cards.get(index - 1);
+    }
+
     public int getTotal() {
         if (cards.isEmpty() || cards.get(0).getValue() == 0) {
             return 0;
