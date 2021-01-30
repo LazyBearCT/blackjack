@@ -16,6 +16,10 @@ public class Card {
         this.isFaceUp = isFaceUp;
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
     public int getValue() {
         int value = 0;
         if (isFaceUp) {
