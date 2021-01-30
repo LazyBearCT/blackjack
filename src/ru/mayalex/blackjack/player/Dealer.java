@@ -2,8 +2,8 @@ package ru.mayalex.blackjack.player;
 
 public class Dealer extends AbstractPlayer {
 
-    public Dealer(String name) {
-        super(name);
+    public Dealer() {
+        super("Dealer");
     }
 
     @Override
