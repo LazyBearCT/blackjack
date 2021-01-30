@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Blackjack {
 
+    public static final int WIN_TOTAL = 21;
+
     public static void main(String[] args) {
         System.out.println("\t\tWelcome to Blackjack!\n");
         int countBots = InputChecker.getCount("bots");

@@ -12,10 +12,10 @@ public class Dealer extends AbstractPlayer {
     }
 
     public void flipFirstCard() {
-        if (cards.isEmpty()) {
+        if (hand.isEmpty()) {
             System.out.println("No card to flip!");
         } else {
-            cards.get(0).flip();
+            hand.getCard(0).flip();
         }
     }
 }

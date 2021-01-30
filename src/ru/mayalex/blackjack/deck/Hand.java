@@ -13,19 +13,31 @@ public class Hand {
         cards.clear();
     }
 
+    public int size() {
+        return cards.size();
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public Card getCard(int index) {
+        return cards.get(index);
+    }
+
     public void addCard(Card card) {
         alreadyCalculate = false;
         cards.add(card);
     }
 
     public int getTotal() {
+        if (cards.isEmpty() || cards.get(0).getValue() == 0) {
+            return 0;
+        }
         if (alreadyCalculate) {
             return total;
         }
         alreadyCalculate = true;
-        if (cards.isEmpty() || cards.get(0).getValue() == 0) {
-            return 0;
-        }
         int score = 0;
         boolean isContainsAce = false;
         for (Card card : cards) {
@@ -39,5 +51,18 @@ public class Hand {
         }
         total = score;
         return score;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        if (cards.isEmpty()) {
+            string.append("<empty>");
+        } else {
+            for (Card card : cards) {
+                string.append(card + "\t");
+            }
+        }
+        return string.toString();
     }
 }

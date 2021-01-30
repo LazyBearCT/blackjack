@@ -1,18 +1,20 @@
 package ru.mayalex.blackjack.player;
 
+import ru.mayalex.blackjack.Blackjack;
 import ru.mayalex.blackjack.deck.Card;
 import ru.mayalex.blackjack.deck.Hand;
 
-public abstract class AbstractPlayer extends Hand {
+public abstract class AbstractPlayer {
 
     protected String name;
+    protected Hand hand = new Hand();
 
     protected AbstractPlayer(String name) {
         this.name = name;
     }
 
     public boolean isBusted() {
-        return getTotal() > 21;
+        return getTotal() > Blackjack.WIN_TOTAL;
     }
 
     public void bust() {
@@ -31,16 +33,27 @@ public abstract class AbstractPlayer extends Hand {
         System.out.println(name + " draw");
     }
 
+    public boolean isBlackjack() {
+        return hand.size() == 2 && getTotal() == Blackjack.WIN_TOTAL;
+    }
+
+    public void addCard(Card card) {
+        hand.addCard(card);
+    }
+
+    public int getTotal() {
+        return hand.getTotal();
+    }
+
+    public void clear() {
+        hand.clear();
+    }
+
     @Override
     public String toString() {
-        System.out.print(name + ":\t");
-        if (cards.isEmpty()) {
-            return "<empty>";
-        }
         StringBuilder string = new StringBuilder();
-        for (Card card : cards) {
-            string.append(card + "\t");
-        }
+        string.append(name + ":\t");
+        string.append(hand);
         int total = getTotal();
         if (total != 0) {
             string.append("(" + total + ")");

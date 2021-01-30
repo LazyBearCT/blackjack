@@ -2,32 +2,36 @@ package ru.mayalex.blackjack.deck;
 
 import ru.mayalex.blackjack.player.AbstractPlayer;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class Deck extends Hand {
+public class Deck {
+
+    private List<Card> deck = new ArrayList<>();
 
     public Deck() {
         generate();
     }
 
     public void generate() {
-        clear();
+        deck.clear();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
-                addCard(new Card(rank, suit));
+                deck.add(new Card(rank, suit));
             }
         }
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        Collections.shuffle(deck);
     }
 
-    public void deal(Hand hand) {
-        if (cards.isEmpty()) {
+    public void deal(AbstractPlayer player) {
+        if (deck.isEmpty()) {
             System.out.println("Out of cards. Unable to deal.");
         } else {
-            hand.addCard(cards.remove(cards.size() - 1));
+            player.addCard(deck.remove(deck.size() - 1));
         }
     }
 
