@@ -1,2 +1,2 @@
 # blackjack
-Запуск: ```bash run.sh``` или ```java -jar out/artifacts/blackjack_jar/blackjack.jar```
+Запуск: ```java -jar target/blackjack-2.0-SNAPSHOT.jar```
