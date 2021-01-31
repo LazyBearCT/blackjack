@@ -7,20 +7,28 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean isHitting() {
-        return getTotal() <= 16;
+    public boolean isHitting(int index) {
+        return getTotal(index) <= 16;
     }
 
     @Override
-    public void makeBet() {
-        bet = 0;
+    public void makeBet(int index) {
+        bets.add(index, 0);
+    }
+
+    public int getTotal() {
+        return getTotal(0);
+    }
+
+    public boolean isBusted() {
+        return isBusted(0);
     }
 
     public void flipFirstCard() {
-        if (hand.isEmpty()) {
+        if (hands.get(0).isEmpty()) {
             System.out.println("No card to flip!");
         } else {
-            hand.getCard(0).flip();
+            hands.get(0).getCard(0).flip();
         }
     }
 }

@@ -1,69 +1,44 @@
 package ru.mayalex.blackjack.util;
 
-import java.io.IOException;
-
 public class InputChecker {
 
-    private static final Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in, true);
 
     public static int getCount(int max, String text) {
+        return getCount(1, max, text);
+    }
+
+    public static int getCount(int min, int max, String text) {
         int count = 0;
-        while (count < 1 || count > max) {
-            System.out.print(text);
-            count = nextInt();
+        System.out.print(text);
+        while (count < min || count > max) {
+            count = nextInt(1, text);
         }
         return count;
     }
 
-    public static int nextInt() {
-        try {
-            return in.nextInt();
-        } catch (IOException e) {
-            try {
-                System.in.close();
-            } catch (IOException ex) {
-                System.err.println("System.in can't closed!");
-            }
-            throw new RuntimeException("Input failed!");
-        }
+    private static int nextInt(int maxCount, String message) {
+        return in.nextIntLine(maxCount, message).get(0);
     }
 
     public static String next() {
-        try {
-            return in.nextToken();
-        } catch (IOException e) {
-            try {
-                System.in.close();
-            } catch (IOException ex) {
-                System.err.println("System.in can't closed!");
-            }
-            throw new RuntimeException("Input failed!");
-        }
+        return in.next();
     }
 
     public static boolean askPlayer(String text) {
-        try {
-            while (true) {
-                System.out.print(text);
-                String string = in.nextToken();
-                if (string.length() == 1) {
-                    char response = Character.toLowerCase(string.charAt(0));
-                    if (response == 'y') {
-                        return true;
-                    }
-                    if (response == 'n') {
-                        return false;
-                    }
+        while (true) {
+            System.out.print(text);
+            String string = in.next();
+            if (string.length() == 1) {
+                char response = Character.toLowerCase(string.charAt(0));
+                if (response == 'y') {
+                    return true;
                 }
-                System.out.println("Please, try again");
+                if (response == 'n') {
+                    return false;
+                }
             }
-        } catch (IOException e) {
-            try {
-                System.in.close();
-            } catch (IOException ex) {
-                System.err.println("System.in can't closed!");
-            }
-            throw new RuntimeException("Input failed!");
+            System.out.println("Please, try again");
         }
     }
 }

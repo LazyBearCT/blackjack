@@ -11,13 +11,13 @@ public class Bot extends Player {
     }
 
     @Override
-    public boolean isHitting() {
-        return getTotal() <= 16;
+    public boolean isHitting(int index) {
+        return getTotal(index) <= 16;
     }
 
     @Override
-    public void makeBet() {
-        bet = 1 + random.nextInt(Math.min(MAX_BET, balance));
-        balance -= bet;
+    public void makeBet(int index) {
+        bets.add(index, 1 + random.nextInt(Math.min(MAX_BET, balance)));
+        balance -= bets.get(index);
     }
 }

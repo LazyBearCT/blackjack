@@ -5,9 +5,17 @@ import java.util.List;
 
 public class Hand {
 
-    protected List<Card> cards = new ArrayList<>();
+    protected List<Card> cards;
     private boolean alreadyCalculate = false;
     private int total = 0;
+
+    public Hand() {
+        this(new ArrayList<>());
+    }
+
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
 
     public void clear() {
         cards.clear();
@@ -19,6 +27,15 @@ public class Hand {
 
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    public Hand split() {
+        if (cards.size() != 2) {
+            throw new RuntimeException();
+        }
+        List<Card> cards1 = new ArrayList<>();
+        cards1.add(cards.remove(cards.size() - 1));
+        return new Hand(cards1);
     }
 
     public Card getCard(int index) {

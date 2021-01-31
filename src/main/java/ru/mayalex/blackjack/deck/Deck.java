@@ -27,22 +27,24 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public void deal(Player player) {
+    public void deal(Player player, int index) {
         if (deck.isEmpty()) {
             System.out.println("Out of cards. Unable to deal.");
         } else {
-            player.addCard(deck.remove(deck.size() - 1));
+            player.addCard(index, deck.remove(deck.size() - 1));
         }
     }
 
     public void additionalCards(Player player) {
         System.out.println();
         System.out.println(player);
-        while (!(player.isBusted()) && player.isHitting()) {
-            deal(player);
-            System.out.println(player);
-            if (player.isBusted()) {
-                player.bust();
+        for (int i = 0; i < player.getCountHands(); i++) {
+            while (!(player.isBusted(i)) && player.isHitting(i)) {
+                deal(player, i);
+                System.out.println(player);
+                if (player.isBusted(i)) {
+                    player.bust(i);
+                }
             }
         }
     }
