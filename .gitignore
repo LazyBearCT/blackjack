@@ -4,3 +4,4 @@
 /out/
 /target/*
 !target/blackjack-2.0-SNAPSHOT.jar
+*.txt

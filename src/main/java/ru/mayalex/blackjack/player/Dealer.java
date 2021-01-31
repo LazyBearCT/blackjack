@@ -1,6 +1,6 @@
 package ru.mayalex.blackjack.player;
 
-public class Dealer extends AbstractPlayer {
+public class Dealer extends Player {
 
     public Dealer() {
         super("Dealer");

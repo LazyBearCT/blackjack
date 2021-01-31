@@ -2,7 +2,7 @@ package ru.mayalex.blackjack.player;
 
 import java.util.Random;
 
-public class Bot extends AbstractPlayer {
+public class Bot extends Player {
 
     private static final Random random = new Random();
 

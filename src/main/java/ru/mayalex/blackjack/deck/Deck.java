@@ -1,6 +1,6 @@
 package ru.mayalex.blackjack.deck;
 
-import ru.mayalex.blackjack.player.AbstractPlayer;
+import ru.mayalex.blackjack.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,14 +8,14 @@ import java.util.List;
 
 public class Deck {
 
-    private List<Card> deck = new ArrayList<>();
+    private List<Card> deck;
 
     public Deck() {
         generate();
     }
 
     public void generate() {
-        deck.clear();
+        deck = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 deck.add(new Card(rank, suit));
@@ -27,7 +27,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public void deal(AbstractPlayer player) {
+    public void deal(Player player) {
         if (deck.isEmpty()) {
             System.out.println("Out of cards. Unable to deal.");
         } else {
@@ -35,7 +35,7 @@ public class Deck {
         }
     }
 
-    public void additionalCards(AbstractPlayer player) {
+    public void additionalCards(Player player) {
         System.out.println();
         System.out.println(player);
         while (!(player.isBusted()) && player.isHitting()) {

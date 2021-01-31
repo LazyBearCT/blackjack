@@ -1,10 +1,10 @@
 package ru.mayalex.blackjack.game;
 
 import ru.mayalex.blackjack.deck.Deck;
-import ru.mayalex.blackjack.player.AbstractPlayer;
+import ru.mayalex.blackjack.player.Player;
 import ru.mayalex.blackjack.player.Bot;
 import ru.mayalex.blackjack.player.Dealer;
-import ru.mayalex.blackjack.player.Player;
+import ru.mayalex.blackjack.player.HumanPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class Game {
 
     private Deck deck;
     private Dealer dealer;
-    private List<AbstractPlayer> players;
+    private List<Player> players;
     private int countBots;
     private int countActivePlayers;
 
@@ -24,7 +24,7 @@ public class Game {
             players.add(new Bot(i));
         }
         for (String name : names) {
-            players.add(new Player(name));
+            players.add(new HumanPlayer(name));
         }
         dealer = new Dealer();
         countActivePlayers = countBots + names.size();
@@ -33,11 +33,11 @@ public class Game {
     public void play() {
         deck = new Deck();
         deck.shuffle();
-        for (AbstractPlayer player : players) {
+        for (Player player : players) {
             player.makeBet();
         }
         for (int i = 0; i < 2; i++) {
-            for (AbstractPlayer player : players) {
+            for (Player player : players) {
                 if (player.isActivePlayer()) {
                     deck.deal(player);
                 }
@@ -45,12 +45,12 @@ public class Game {
             deck.deal(dealer);
         }
         dealer.flipFirstCard();
-        for (AbstractPlayer player : players) {
+        for (Player player : players) {
             System.out.println(player);
         }
         System.out.println(dealer);
         int count = 0;
-        for (AbstractPlayer player : players) {
+        for (Player player : players) {
             if (count == countBots) {
                 System.out.println();
                 System.out.print(dealer);
@@ -64,7 +64,7 @@ public class Game {
         deck.additionalCards(dealer);
         System.out.println();
         if (dealer.isBusted()) {
-            for (AbstractPlayer player : players) {
+            for (Player player : players) {
                 if (player.isActivePlayer()) {
                     if (!player.isBusted()) {
                         player.win();
@@ -77,7 +77,7 @@ public class Game {
             }
         } else {
             int dealerTotal = dealer.getTotal();
-            for (AbstractPlayer player : players) {
+            for (Player player : players) {
                 if (player.isActivePlayer()) {
                     if (!player.isBusted()) {
                         int playerTotal = player.getTotal();
@@ -98,7 +98,7 @@ public class Game {
         }
         System.out.println("\nPlayers: ");
         System.out.println(dealer);
-        for (AbstractPlayer player : players) {
+        for (Player player : players) {
             System.out.println(player);
             if (player.getBalance() <= 0) {
                 countActivePlayers--;
