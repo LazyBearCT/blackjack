@@ -3,5 +3,5 @@
 *.MF
 /out/
 /target/*
-!target/blackjack-2.0-SNAPSHOT.jar
+!target/blackjack-2.0.jar
 *.txt
