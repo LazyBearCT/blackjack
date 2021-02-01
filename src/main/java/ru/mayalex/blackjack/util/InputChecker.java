@@ -22,6 +22,7 @@ public class InputChecker {
             if (checker.test(count)) {
                 return count;
             }
+            System.out.println("Please, try again");
             System.out.print(text);
         }
     }

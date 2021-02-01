@@ -19,7 +19,7 @@ public class HumanPlayer extends Player {
         if (hand.isLimit()) {
             return false;
         }
-        if (hand.getTotal() == Blackjack.WIN_TOTAL) {
+        if (getTotal(index) == Blackjack.WIN_TOTAL) {
             return false;
         }
         String message = "";
@@ -49,7 +49,7 @@ public class HumanPlayer extends Player {
             case 3: //split
                 hands.add(index + 1, hand.split());
                 return !isBankrupt();
-            case 4:
+            case 4: //hit
                 return true;
             case 5:
             default:
