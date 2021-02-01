@@ -14,24 +14,9 @@ public abstract class Player {
     protected static final int MAX_BET = 20;
 
     protected String name;
-    protected List<Hand> hands = initHands();
-
-    private static List<Hand> initHands() {
-        List<Hand> hands = new ArrayList<>();
-        hands.add(new Hand());
-        return hands;
-    }
-
+    protected List<Hand> hands = new ArrayList<>();
     protected int balance;
-    protected List<Integer> bets = new ArrayList<>();
     protected boolean isActive = true;
-    protected List<Boolean> isLose = initIsLose();
-
-    private static List<Boolean> initIsLose() {
-        List<Boolean> isLose = new ArrayList<>();
-        isLose.add(false);
-        return isLose;
-    }
 
     protected Player(String name) {
         this(name, 200);
@@ -42,10 +27,6 @@ public abstract class Player {
         this.balance = balance;
     }
 
-    public int getBalance() {
-        return balance;
-    }
-
     public int getCountHands() {
         return hands.size();
     }
@@ -54,8 +35,11 @@ public abstract class Player {
         return isActive;
     }
 
-    public void deactivatePlayer() {
-        isActive = false;
+    private void deactivatePlayer() {
+        if (balance <= 0) {
+            isActive = false;
+            balance = -1;
+        }
     }
 
     public boolean isBusted(int index) {
@@ -63,31 +47,37 @@ public abstract class Player {
     }
 
     public void bust(int index) {
-        System.out.println(name + "'s hand" + index + " busts.");
+        printStatus(index, " busts.");
+        deactivatePlayer();
     }
 
     public void win(int index) {
-        System.out.println(name + "'s hand" + index + " wins.");
+        Hand hand = hands.get(index);
+        printStatus(index, " wins.");
         if (isBlackjack(index)) {
-            balance += 3 * bets.get(index);
+            balance += 3 * hand.getBet();
         } else {
-            balance += 2 * bets.get(index);
+            balance += 2 * hand.getBet();
         }
     }
 
     public void bankrupt() {
         System.out.println(name + " is bankrupt.");
-        balance = 0;
+        deactivatePlayer();
     }
 
     public void lose(int index) {
-        isLose.set(index, false);
-        System.out.println(name + "'s hand" + index + " loses.");
+        printStatus(index, " loses.");
+        deactivatePlayer();
     }
 
     public void draw(int index) {
-        System.out.println(name + "'s hand" + index + " draw");
-        balance += bets.get(index);
+        printStatus(index, " draw");
+        balance += hands.get(index).getBet();
+    }
+
+    private void printStatus(int index, String status) {
+        System.out.println(name + "'s hand" + index + status);
     }
 
     public boolean isBlackjack(int index) {
@@ -99,18 +89,17 @@ public abstract class Player {
     }
 
     public int getTotal(int index) {
-        if (isLose.get(index)) {
+        Hand hand = hands.get(index);
+        if (hand.isLose()) {
             return 0;
         }
-        return hands.get(index).getTotal();
+        return hand.getTotal();
     }
 
     public void clear() {
         for (Hand hand : hands) {
             hand.clear();
         }
-        bets.clear();
-        Collections.fill(isLose, false);
     }
 
     @Override
@@ -119,11 +108,12 @@ public abstract class Player {
         string.append(name + ": ");
         if (isActivePlayer()) {
             for (int i = 0; i < hands.size(); i++) {
-                string.append("hand" + i + "\t" + hands.get(i));
-                if (isLose.get(i)) {
+                Hand hand = hands.get(i);
+                string.append("hand" + i + "\t" + hand);
+                if (hand.isLose()) {
                     string.append("loses");
                 } else {
-                    int total = getTotal(i);
+                    int total = hand.getTotal();
                     if (total != 0) {
                         string.append("(" + total + ")\t");
                     }
@@ -138,5 +128,5 @@ public abstract class Player {
 
     public abstract boolean isHitting(int index);
 
-    public abstract void makeBet(int index);
+    public abstract void makeBet();
 }

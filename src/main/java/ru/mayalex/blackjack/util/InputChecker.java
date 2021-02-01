@@ -1,5 +1,8 @@
 package ru.mayalex.blackjack.util;
 
+import java.util.List;
+import java.util.function.IntPredicate;
+
 public class InputChecker {
 
     private static final Scanner in = new Scanner(System.in, true);
@@ -9,12 +12,27 @@ public class InputChecker {
     }
 
     public static int getCount(int min, int max, String text) {
-        int count = 0;
+        return getCount(count -> (count >= min && count <= max), text);
+    }
+
+    public static int getCount(IntPredicate checker, String text) {
         System.out.print(text);
-        while (count < min || count > max) {
-            count = nextInt(1, text);
+        while (true) {
+            int count = nextInt(1, text);
+            if (checker.test(count)) {
+                return count;
+            }
+            System.out.print(text);
         }
-        return count;
+    }
+
+    public static boolean checkCount(int count, List<Integer> values) {
+        for (int value : values) {
+            if (count == value) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static int nextInt(int maxCount, String message) {

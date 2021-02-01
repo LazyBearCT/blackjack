@@ -126,6 +126,7 @@ public class Scanner implements AutoCloseable {
 
     public String next() {
         if (hasNext()) {
+            goToNextLine();
             return token;
         }
         return null;
@@ -162,13 +163,12 @@ public class Scanner implements AutoCloseable {
 
     private int inputFailed(List<Integer> list, String message) {
         list.clear();
-        System.out.println(message);
+        System.out.print(message);
         return 0;
     }
 
     public List<Integer> nextIntLine(int maxCount, String message) {
-        // :NOTE: Создавать новый список
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         int count = 0;
         while (count < maxCount) {
             if (hasNextInt()) {

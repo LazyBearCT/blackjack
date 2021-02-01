@@ -8,13 +8,49 @@ public class Hand {
     protected List<Card> cards;
     private boolean alreadyCalculate = false;
     private int total = 0;
+    private int bet;
+    private boolean isLose;
+    private boolean isLimit;
 
-    public Hand() {
-        this(new ArrayList<>());
+    public Hand(int bet) {
+        this(new ArrayList<>(), bet);
     }
 
-    private Hand(List<Card> cards) {
+    private Hand(List<Card> cards, int bet) {
+        this(cards, bet, false, false);
+    }
+
+    private Hand(List<Card> cards, int bet, boolean isLose, boolean isLimit) {
         this.cards = cards;
+        this.bet = bet;
+        this.isLose = isLose;
+        this.isLimit = isLimit;
+    }
+
+    public int getBet() {
+        return bet;
+    }
+
+    public boolean isLose() {
+        return isLose;
+    }
+
+    public boolean isLimit() {
+        return isLimit;
+    }
+
+    public int lose() {
+        isLose = true;
+        for (int i = 2; i <= bet; i++) {
+            if (bet % i == 0) {
+                return bet / i;
+            }
+        }
+        return bet;
+    }
+
+    public Hand doubleBet() {
+        return new Hand(cards, bet * 2, false, true);
     }
 
     public void clear() {
@@ -35,7 +71,7 @@ public class Hand {
         }
         List<Card> cards1 = new ArrayList<>();
         cards1.add(cards.remove(cards.size() - 1));
-        return new Hand(cards1);
+        return new Hand(cards1, bet);
     }
 
     public Card getCard(int index) {

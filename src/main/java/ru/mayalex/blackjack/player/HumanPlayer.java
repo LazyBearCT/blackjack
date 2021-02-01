@@ -9,59 +9,45 @@ import java.util.List;
 
 public class HumanPlayer extends Player {
 
-    private List<Boolean> isLimit = initIsLimit();
-
-    private List<Boolean> initIsLimit() {
-        List<Boolean> isLimit = new ArrayList<>();
-        isLimit.add(false);
-        return isLimit;
-    }
-
     public HumanPlayer(String name) {
         super(name);
     }
 
     @Override
     public boolean isHitting(int index) {
-        if (hands.get(index).size() <= 2) {
-            isLimit.set(index, false);
-        }
-        if (isLimit.get(index)) {
+        Hand hand = hands.get(index);
+        if (hand.isLimit()) {
             return false;
         }
-        if (getTotal(index) == Blackjack.WIN_TOTAL) {
+        if (hand.getTotal() == Blackjack.WIN_TOTAL) {
             return false;
         }
         String message = "";
-        Hand hand = hands.get(index);
+        List<Integer> values = new ArrayList<>();
         if (hand.size() == 2) {
             message += "Enter 1, if you want lose.\nEnter 2, if you want double.\n";
+            values.add(1);
+            values.add(2);
             if (hand.getCard(0).getValue() == hand.getCard(1).getValue()) {
                 message += "Enter 3, if you want split.\n";
+                values.add(3);
             }
         }
         message += "Enter 4, if you want hit.\nEnter 5 or not: ";
-        int choice = InputChecker.getCount(5, message);
+        values.add(4);
+        values.add(5);
+        int choice = InputChecker.getCount(count -> InputChecker.checkCount(count, values), message);
+        int bet = hand.getBet();
         switch (choice) {
             case 1: //lose
-                isLose.set(index, true);
-                for (int i = 2; i <= bets.get(index); i++) {
-                    if (bets.get(index) % i == 0) {
-                        balance += bets.get(index) / i;
-                        break;
-                    }
-                }
+                balance += hand.lose();
                 return false;
             case 2: //double
-                balance -= bets.get(index);
-                bets.set(index, bets.get(index) * 2);
-                isLimit.set(index, true);
+                balance -= bet;
+                hands.set(index, hand.doubleBet());
                 return !isBankrupt();
             case 3: //split
-                hands.add(index + 1, hands.get(index).split());
-                bets.add(index + 1, bets.get(index));
-                isLose.add(index + 1, false);
-                isLimit.add(index + 1, false);
+                hands.add(index + 1, hand.split());
                 return !isBankrupt();
             case 4:
                 return true;
@@ -81,8 +67,10 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public void makeBet(int index) {
-        bets.add(index, InputChecker.getCount(Math.min(MAX_BET, balance), "Your bet is (1 - " + Math.min(MAX_BET, balance) + "): "));
-        balance -= bets.get(index);
+    public void makeBet() {
+        int min = Math.min(MAX_BET, balance);
+        Hand hand = new Hand(InputChecker.getCount(min, "Your bet is (1 - " + min + "): "));
+        hands.add(hand);
+        balance -= hand.getBet();
     }
 }

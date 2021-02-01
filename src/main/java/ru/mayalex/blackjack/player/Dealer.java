@@ -1,9 +1,12 @@
 package ru.mayalex.blackjack.player;
 
+import ru.mayalex.blackjack.deck.Hand;
+
 public class Dealer extends Player {
 
     public Dealer() {
         super("Dealer");
+        hands.add(new Hand(0));
     }
 
     @Override
@@ -12,8 +15,8 @@ public class Dealer extends Player {
     }
 
     @Override
-    public void makeBet(int index) {
-        bets.add(index, 0);
+    public void makeBet() {
+
     }
 
     public int getTotal() {
@@ -25,10 +28,11 @@ public class Dealer extends Player {
     }
 
     public void flipFirstCard() {
-        if (hands.get(0).isEmpty()) {
+        Hand hand = hands.get(0);
+        if (hand.isEmpty()) {
             System.out.println("No card to flip!");
         } else {
-            hands.get(0).getCard(0).flip();
+            hand.getCard(0).flip();
         }
     }
 }

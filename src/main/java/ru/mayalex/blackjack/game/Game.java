@@ -34,9 +34,7 @@ public class Game {
         deck = new Deck();
         deck.shuffle();
         for (Player player : players) {
-            for (int i = 0; i < player.getCountHands(); i++) {
-                player.makeBet(i);
-            }
+            player.makeBet();
         }
         for (int i = 0; i < 2; i++) {
             for (Player player : players) {
@@ -108,15 +106,8 @@ public class Game {
         System.out.println(dealer);
         for (Player player : players) {
             System.out.println(player);
-            if (player.getBalance() <= 0) {
-                countActivePlayers--;
-                player.deactivatePlayer();
-            }
             player.clear();
         }
         dealer.clear();
-        if (countActivePlayers == 1) {
-            System.out.println("Game over!!!");
-        }
     }
 }

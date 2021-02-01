@@ -1,5 +1,7 @@
 package ru.mayalex.blackjack.player;
 
+import ru.mayalex.blackjack.deck.Hand;
+
 import java.util.Random;
 
 public class Bot extends Player {
@@ -16,8 +18,9 @@ public class Bot extends Player {
     }
 
     @Override
-    public void makeBet(int index) {
-        bets.add(index, 1 + random.nextInt(Math.min(MAX_BET, balance)));
-        balance -= bets.get(index);
+    public void makeBet() {
+        Hand hand = new Hand(1 + random.nextInt(Math.min(MAX_BET, balance)));
+        hands.add(hand);
+        balance -= hand.getBet();
     }
 }
